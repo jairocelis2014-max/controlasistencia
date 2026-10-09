@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Control de Asistencia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #0d1117; color: #c9d1d9; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        
+        /* DISEÑO IDÉNTICO A TU NUEVA IMAGEN DE REFERENCIA */
+        .marcacion-wrapper { background: #161b22; border: 1px solid #30363d; border-radius: 16px; width: 100%; max-width: 680px; padding: 35px; box-shadow: 0 12px 32px rgba(0,0,0,0.6); text-align: center; }
+        
+        .clock-container { background: #0d1117; border: 1px solid #30363d; border-radius: 12px; padding: 22px; margin-bottom: 22px; }
+        .clock { font-size: 3rem; font-weight: 700; color: #58a6ff; letter-spacing: 2px; margin-bottom: 5px; }
+        .date { font-size: 0.85rem; color: #8b949e; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; }
+
+        .alert-banner { display: none; padding: 15px 20px; border-radius: 8px; margin-bottom: 22px; text-align: left; font-size: 0.9rem; font-weight: 500; position: relative; }
+        .alert-success { background: rgba(35, 134, 54, 0.25); border: 1px solid #238636; color: #3fb950; }
+        .alert-tardanza { background: rgba(248, 81, 73, 0.25); border: 1px solid #f85149; color: #f85149; }
+        .alert-title { font-weight: 700; display: block; margin-bottom: 3px; font-size: 0.95rem; }
+
+        .section-title { color: #58a6ff; font-size: 1rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 22px; text-transform: uppercase; }
+
+        .main-grid { display: grid; grid-template-columns: 220px 1fr; gap: 25px; align-items: center; margin-bottom: 25px; }
+
+        /* Tarjeta de foto izquierda */
+        .photo-card { background: #0d1117; border: 1px solid #30363d; border-radius: 12px; padding: 25px 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
+        .profile-img { width: 125px; height: 125px; border-radius: 50%; object-fit: cover; border: 3px solid #58a6ff; margin-bottom: 15px; }
+        .status-badge { background: #238636; color: #fff; font-size: 0.75rem; font-weight: 700; padding: 5px 14px; border-radius: 20px; letter-spacing: 0.5px; text-transform: uppercase; }
+        .status-badge.waiting { background: #30363d; color: #8b949e; }
+        .status-badge.tardanza { background: #f85149; color: #fff; }
+
+        /* Formulario derecho */
+        .form-right { display: flex; flex-direction: column; gap: 15px; text-align: left; }
+        .input-group label { display: block; font-size: 0.75rem; color: #8b949e; margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .dni-input { width: 100%; padding: 14px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: #58a6ff; font-size: 1.3rem; text-align: center; font-weight: 700; letter-spacing: 3px; }
+        .dni-input:focus { border-color: #58a6ff; outline: none; }
+
+        /* Fila dividida exactamente como en tu imagen para Nombres y Cargo */
+        .row-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        .info-box { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px; color: #8b949e; font-size: 0.82rem; min-height: 48px; display: flex; align-items: center; word-break: break-word; }
+        .info-box.filled { color: #fff; font-weight: 700; font-size: 0.85rem; }
+
+        /* Selectores de Entrada / Salida idénticos */
+        .tipo-selector { display: flex; gap: 25px; margin-top: 2px; }
+        .tipo-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; color: #fff; font-size: 0.85rem; font-weight: 700; }
+        .tipo-selector label:nth-child(1) { color: #3fb950; }
+        .tipo-selector label:nth-child(2) { color: #f85149; }
+        .tipo-selector input[type="radio"] { width: 16px; height: 16px; cursor: pointer; }
+
+        /* Botón azul principal idéntico */
+        .btn-registrar { background: #1f6feb; color: #fff; border: none; width: 100%; padding: 15px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; letter-spacing: 0.5px; }
+        .btn-registrar:hover { background: #388bfd; }
+
+        .btn-admin { background: transparent; color: #8b949e; border: 1px solid #30363d; margin-top: 15px; width: 100%; padding: 12px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+        .btn-admin:hover { background: #30363d; color: #fff; }
+
+        /* Panel de Administración */
+        #adminView { display: none; width: 100vw; height: 100vh; background: #0d1117; grid-template-columns: 250px 1fr; }
+        .sidebar { background: #161b22; border-right: 1px solid #30363d; padding: 30px 15px; display: flex; flex-direction: column; gap: 8px; }
+        .sidebar h2 { color: #58a6ff; font-size: 1.1rem; margin: 0 0 25px 10px; letter-spacing: 1px; }
+        .menu-item { padding: 12px 15px; border-radius: 8px; color: #8b949e; text-decoration: none; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s; text-align: left; background: transparent; border: none; width: 100%; }
+        .menu-item:hover, .menu-item.active { background: #1f6feb; color: #fff; }
+        
+        .main-content { padding: 30px; overflow-y: auto; height: 100vh; }
+        
+        .stats-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 25px; }
+        .stat-box { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; }
+        .stat-box span { font-size: 0.75rem; color: #8b949e; font-weight: 700; text-transform: uppercase; }
+        .stat-box h2 { font-size: 2.2rem; margin: 10px 0 0 0; color: #58a6ff; }
+        .stat-box h2.red { color: #f85149; }
+        .stat-box h2.green { color: #3fb950; }
+
+        .filters-bar { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; display: flex; gap: 15px; align-items: flex-end; margin-bottom: 25px; flex-wrap: wrap; }
+        .filter-group { flex: 1; min-width: 140px; }
+        .filter-group label { display: block; font-size: 0.75rem; color: #8b949e; margin-bottom: 6px; font-weight: 700; text-transform: uppercase; }
+        
+        .btn-filter { background: #1f6feb; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; height: 38px; }
+        .btn-excel { background: #238636; color: #fff; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; height: 38px; }
+        .btn-pdf { background: #da3633; color: #fff; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; height: 38px; }
+
+        table { width: 100%; border-collapse: collapse; background: #161b22; border-radius: 8px; overflow: hidden; border: 1px solid #30363d; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #30363d; font-size: 0.85rem; vertical-align: middle; }
+        th { background: #21262d; color: #8b949e; font-weight: 600; text-transform: uppercase; font-size: 0.75rem; }
+        
+        .badge { padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; display: inline-block; }
+        .badge-entrada { background: rgba(35, 134, 54, 0.2); color: #3fb950; border: 1px solid #238636; }
+        .badge-salida { background: rgba(110, 118, 129, 0.2); color: #c9d1d9; border: 1px solid #6e7681; }
+        .badge-tardanza { background: rgba(248, 81, 73, 0.2); color: #f85149; border: 1px solid #f85149; }
+
+        .panel-section { display: none; }
+        .panel-section.active-section { display: block; }
+        
+        .form-card { background: #161b22; border: 1px solid #30363d; padding: 25px; border-radius: 8px; max-width: 550px; margin-bottom: 25px; }
+        .form-card input { margin-bottom: 15px; width: 100%; padding: 10px 12px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; color: #fff; }
+        
+        .table-avatar { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 1px solid #58a6ff; }
+        .btn-action { padding: 6px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; border: none; margin-right: 5px; }
+        .btn-edit { background: #1f6feb; color: #fff; }
+        .btn-delete { background: #da3633; color: #fff; }
+
+        /* Estilo optimizado para Impresión VERTICAL (Portrait) limpia */
+        @media print {
+            @page { size: portrait; margin: 8mm; }
+            body { background: #fff; color: #000; display: block; padding: 0; }
+            .sidebar, .filters-bar, .btn-admin, .btn, .stats-container, .no-print { display: none !important; }
+            #adminView { display: block !important; height: auto; width: 100%; background: #fff; }
+            .main-content { padding: 0; height: auto; overflow: visible; }
+            
+            table { border: 1px solid #000; background: #fff; width: 100%; table-layout: fixed; font-size: 8.5pt; }
+            tr { page-break-inside: avoid; page-break-after: auto; }
+            th, td { border: 1px solid #000; color: #000; padding: 4px 5px; word-wrap: break-word; overflow: hidden; }
+            th { background: #eee !important; color: #000; font-size: 8pt; }
+            
+            th:nth-child(1), td:nth-child(1) { width: 8%; text-align: center; }
+            th:nth-child(2), td:nth-child(2) { width: 14%; }
+            th:nth-child(3), td:nth-child(3) { width: 22%; font-size: 8pt; }
+            th:nth-child(4), td:nth-child(4) { width: 18%; font-size: 8pt; }
+            th:nth-child(5), td:nth-child(5) { width: 12%; }
+            th:nth-child(6), td:nth-child(6) { width: 10%; }
+            th:nth-child(7), td:nth-child(7) { width: 8%; font-size: 7pt; text-align: center; }
+            th:nth-child(8), td:nth-child(8) { width: 8%; font-size: 7pt; text-align: center; }
+
+            .badge { border: 1px solid #000; background: none !important; color: #000 !important; font-weight: bold; padding: 2px 4px; font-size: 6.5pt; }
+            .table-avatar { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; border: 1px solid #000; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PANTALLA PÚBLICA DE MARCACIÓN CON EL NUEVO DISEÑO -->
+<div class="marcacion-wrapper" id="mainView">
+    <div class="clock-container">
+        <div class="clock" id="clock">00:00:00</div>
+        <div class="date" id="date">Cargando fecha...</div>
+    </div>
+
+    <div id="alertBanner" class="alert-banner"></div>
+
+    <div class="section-title">CONTROL DE INGRESO Y SALIDA</div>
+
+    <div class="main-grid">
+        <!-- Tarjeta de foto izquierda -->
+        <div class="photo-card">
+            <img src="https://i.imgur.com/6VBx3io.png" class="profile-img" id="fotoEmp" alt="Foto">
+            <div class="status-badge waiting" id="estadoFotoBadge">ESPERANDO DNI</div>
+        </div>
+
+        <!-- Formulario derecho con distribución exacta a la imagen -->
+        <div class="form-right">
+            <div class="input-group">
+                <label>CÓDIGO O DNI</label>
+                <input type="text" id="dniInput" class="dni-input" placeholder="Ingrese DNI" autofocus oninput="buscarEmpleado()">
+            </div>
+
+            <div class="row-inputs">
+                <div class="input-group">
+                    <label>Nombres y Apellidos</label>
+                    <div class="info-box" id="nombreEmp">---</div>
+                </div>
+                <div class="input-group">
+                    <label>Cargo</label>
+                    <div class="info-box" id="cargoEmp">---</div>
+                </div>
+            </div>
+
+            <div class="tipo-selector">
+                <label><input type="radio" name="tipo" value="Entrada" checked> ENTRADA</label>
+                <label><input type="radio" name="tipo" value="Salida"> SALIDA</label>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-registrar" onclick="registrar()">REGISTRAR MARCACIÓN</button>
+    <button class="btn-admin" onclick="solicitarAccesoAdmin()">PANEL DE ADMINISTRACIÓN</button>
+</div>
+
+<!-- PANEL DE ADMINISTRACIÓN -->
+<div id="adminView">
+    <div class="sidebar">
+        <h2>ADMIN PANEL</h2>
+        <button class="menu-item active" onclick="cambiarSeccion('dashboard', this)">Dashboard y Reportes</button>
+        <button class="menu-item" onclick="cambiarSeccion('empleados', this)">Gestión de Empleados (CRUD)</button>
+        <button class="menu-item" onclick="salirAdmin()" style="margin-top: auto; color: #f85149;">Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <div id="section-dashboard" class="panel-section active-section">
+            <div class="stats-container">
+                <div class="stat-box">
+                    <span>TOTAL EMPLEADOS</span>
+                    <h2 id="statTotalEmp">0</h2>
+                </div>
+                <div class="stat-box">
+                    <span>ASISTENCIAS HOY</span>
+                    <h2 class="green" id="statAsistHoy">0</h2>
+                </div>
+                <div class="stat-box">
+                    <span>TARDANZAS REGISTRADAS</span>
+                    <h2 class="red" id="statTardanzas">0</h2>
+                </div>
+            </div>
+
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label>Desde Fecha</label>
+                    <input type="date" id="filtroDesde">
+                </div>
+                <div class="filter-group">
+                    <label>Hasta Fecha</label>
+                    <input type="date" id="filtroHasta">
+                </div>
+                <div class="filter-group" style="flex: 1.5;">
+                    <label>Filtrar por Empleado</label>
+                    <select id="filtroEmpleado">
+                        <option value="">-- Todos --</option>
+                    </select>
+                </div>
+                <button class="btn-filter" onclick="aplicarFiltros()">Filtrar</button>
+                <button class="btn-excel" onclick="exportarExcelTabla()">Exportar Excel</button>
+                <button class="btn-pdf" onclick="window.print()">Exportar PDF / Imprimir Mes</button>
+            </div>
+
+            <h3 style="color: #fff; margin-bottom: 15px;">Reporte de Asistencia Filtrada</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Foto</th>
+                        <th>DNI</th>
+                        <th>Empleado</th>
+                        <th>Área</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Tipo</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaRegistros">
+                    <tr><td colspan="8" style="text-align: center; color: #8b949e;">Cargando registros...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="section-empleados" class="panel-section">
+            <h3 style="color: #fff; margin-bottom: 20px;">Registrar o Actualizar Empleado</h3>
+            <div class="form-card">
+                <label>DNI</label>
+                <input type="text" id="nuevoDni" placeholder="Ej: 43486923">
+                <label>Nombres y Apellidos</label>
+                <input type="text" id="nuevoNombre" placeholder="Ej: Jairo Daniel Celis Salinas">
+                <label>Cargo / Área</label>
+                <input type="text" id="nuevoCargo" placeholder="Ej: ADMINISTRATIVO">
+                <label>Subir Foto (Compresión automática ultrarrápida)</label>
+                <input type="file" id="inputFotoFile" accept="image/*" onchange="comprimirYConvertirImagen(this)">
+                <input type="hidden" id="nuevoFotoBase64">
+                <button class="btn-registrar" style="margin-top: 10px;" onclick="guardarNuevoEmpleado()">Guardar Empleado</button>
+            </div>
+
+            <h3 style="color: #fff; margin: 30px 0 15px 0;">Lista de Empleados Registrados</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Foto</th>
+                        <th>DNI</th>
+                        <th>Nombres y Apellidos</th>
+                        <th>Cargo / Área</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaEmpleadosAdmin">
+                    <tr><td colspan="5" style="text-align: center;">Cargando...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    let datosGlobales = [];
+    let registrosFiltradosActuales = [];
+    let imagenActualBase64 = "";
+
+    setInterval(() => {
+        const now = new Date();
+        document.getElementById('clock').innerText = now.toLocaleTimeString();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('date').innerText = now.toLocaleDateString('es-ES', options);
+    }, 1000);
+
+    function comprimirYConvertirImagen(input) {
+        if (input.files && input.files[0]) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let img = new Image();
+                img.src = e.target.result;
+                img.onload = function() {
+                    let canvas = document.createElement('canvas');
+                    let ctx = canvas.getContext('2d');
+                    
+                    let MAX_WIDTH = 200;
+                    let MAX_HEIGHT = 200;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+                    imagenActualBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                }
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function buscarEmpleado() {
+        const dni = document.getElementById('dniInput').value;
+        const nombreBox = document.getElementById('nombreEmp');
+        const cargoBox = document.getElementById('cargoEmp');
+        const fotoElem = document.getElementById('fotoEmp');
+        const badgeElem = document.getElementById('estadoFotoBadge');
+
+        if (dni.length < 6) {
+            nombreBox.innerText = "---";
+            nombreBox.className = "info-box";
+            cargoBox.innerText = "---";
+            cargoBox.className = "info-box";
+            fotoElem.src = "https://i.imgur.com/6VBx3io.png";
+            badgeElem.innerText = "ESPERANDO DNI";
+            badgeElem.className = "status-badge waiting";
+            return;
+        }
+
+        google.script.run.withSuccessHandler(res => {
+            if (res.encontrado) {
+                nombreBox.innerText = res.nombre;
+                nombreBox.className = "info-box filled";
+                cargoBox.innerText = res.cargo;
+                cargoBox.className = "info-box filled";
+                fotoElem.src = res.foto;
+                badgeElem.innerText = "ENCONTRADO";
+                badgeElem.className = "status-badge";
+            } else {
+                nombreBox.innerText = "No encontrado";
+                nombreBox.className = "info-box";
+                cargoBox.innerText = "Verifique DNI";
+                cargoBox.className = "info-box";
+                fotoElem.src = "https://i.imgur.com/6VBx3io.png";
+                badgeElem.innerText = "NO REGISTRADO";
+                badgeElem.className = "status-badge tardanza";
+            }
+        }).buscarEmpleadoPorDni(dni);
+    }
+
+    function registrar() {
+        const dni = document.getElementById('dniInput').value;
+        const tipo = document.querySelector('input[name="tipo"]:checked').value;
+
+        if(!dni) {
+            mostrarAlertaBanner("Por favor ingrese un número de DNI válido.", "error");
+            return;
+        }
+
+        google.script.run.withSuccessHandler(res => {
+            if(res.success) {
+                let esTardanza = (res.estado === 'TARDANZA');
+                let tipoBanner = esTardanza ? 'tardanza' : 'success';
+                let tituloBanner = esTardanza ? 'REGISTRO DE TARDANZA' : `REGISTRO DE ${tipo.toUpperCase()} CORRECTO`;
+                
+                const now = new Date();
+                let horaActualStr = now.toLocaleTimeString();
+
+                mostrarAlertaBanner(tituloBanner, `Personal: ${res.nombre} | Estado: ${res.estado} | Hora: ${horaActualStr}`, tipoBanner);
+                
+                const badgeElem = document.getElementById('estadoFotoBadge');
+                badgeElem.innerText = res.estado;
+                badgeElem.className = esTardanza ? "status-badge tardanza" : "status-badge";
+
+                document.getElementById('dniInput').value = "";
+                buscarEmpleado();
+            } else {
+                mostrarAlertaBanner("ERROR DE REGISTRO", res.message, "error");
+            }
+        }).registrarMarcacion(dni, tipo);
+    }
+
+    function mostrarAlertaBanner(titulo, mensaje, tipo) {
+        const banner = document.getElementById('alertBanner');
+        banner.innerHTML = `<span class="alert-title">${titulo}</span>${mensaje}`;
+        
+        if (tipo === 'tardanza' || tipo === 'error') {
+            banner.className = "alert-banner alert-tardanza";
+        } else {
+            banner.className = "alert-banner alert-success";
+        }
+        
+        banner.style.display = 'block';
+        setTimeout(() => { banner.style.display = 'none'; }, 5000);
+    }
+
+    function solicitarAccesoAdmin() {
+        let pass = prompt("Ingrese la contraseña de Administrador:");
+        if (!pass) return;
+
+        google.script.run.withSuccessHandler(esValido => {
+            if (esValido) {
+                document.getElementById('mainView').style.display = 'none';
+                document.getElementById('adminView').style.display = 'grid';
+                cargarDatosDashboard();
+            } else {
+                alert("Contraseña incorrecta.");
+            }
+        }).verificarPasswordAdmin(pass);
+    }
+
+    function salirAdmin() {
+        document.getElementById('adminView').style.display = 'none';
+        document.getElementById('mainView').style.display = 'block';
+        document.getElementById('dniInput').focus();
+    }
+
+    function cambiarSeccion(seccionId, btnElement) {
+        document.querySelectorAll('.panel-section').forEach(sec => sec.classList.remove('active-section'));
+        document.querySelectorAll('.sidebar .menu-item').forEach(item => item.classList.remove('active'));
+        
+        document.getElementById('section-' + seccionId).classList.add('active-section');
+        btnElement.classList.add('active');
+        
+        if(seccionId === 'dashboard') cargarDatosDashboard();
+    }
+
+    function cargarDatosDashboard() {
+        google.script.run.withSuccessHandler(data => {
+            document.getElementById('statTotalEmp').innerText = data.totalEmpleados;
+            document.getElementById('statAsistHoy').innerText = data.asistenciasHoy;
+            document.getElementById('statTardanzas').innerText = data.tardanzasHoy;
+
+            datosGlobales = data.registros;
+            registrosFiltradosActuales = datosGlobales;
+            renderizarTabla(datosGlobales);
+
+            const selectEmp = document.getElementById('filtroEmpleado');
+            selectEmp.innerHTML = `<option value="">-- Todos --</option>`;
+            data.empleados.forEach(emp => {
+                let opt = document.createElement('option');
+                opt.value = emp.nombre;
+                opt.innerText = emp.nombre;
+                selectEmp.appendChild(opt);
+            });
+
+            const tbodyEmp = document.getElementById('tablaEmpleadosAdmin');
+            tbodyEmp.innerHTML = "";
+            if(data.empleados.length === 0) {
+                tbodyEmp.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #8b949e;">No hay empleados registrados.</td></tr>`;
+            } else {
+                data.empleados.forEach(emp => {
+                    let tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><img src="${emp.foto}" class="table-avatar" alt="Foto"></td>
+                        <td>${emp.dni}</td>
+                        <td><strong>${emp.nombre}</strong></td>
+                        <td>${emp.cargo}</td>
+                        <td>
+                            <button class="btn-action btn-edit" onclick="editarEmpleado('${emp.dni}', '${emp.nombre}', '${emp.cargo}')">Editar</button>
+                            <button class="btn-action btn-delete" onclick="borrarEmpleado('${emp.dni}')">Eliminar</button>
+                        </td>
+                    `;
+                    tbodyEmp.appendChild(tr);
+                });
+            }
+        }).getDashboardData();
+    }
+
+    function renderizarTabla(registros) {
+        registrosFiltradosActuales = registros;
+        const tbody = document.getElementById('tablaRegistros');
+        tbody.innerHTML = "";
+        if (registros.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #8b949e;">No hay marcaciones registradas con estos filtros.</td></tr>`;
+            return;
+        }
+
+        registros.forEach(reg => {
+            let badgeTipo = reg.tipo === 'Entrada' ? 'badge-entrada' : 'badge-salida';
+            let badgeEstado = (reg.estado === 'TARDANZA') ? 'badge-tardanza' : (reg.estado === 'PUNTUAL' ? 'badge-entrada' : 'badge-salida');
+            
+            let tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><img src="${reg.foto}" class="table-avatar" alt="Foto"></td>
+                <td>${reg.dni}</td>
+                <td><strong>${reg.nombre}</strong></td>
+                <td>${reg.area}</td>
+                <td>${reg.fecha}</td>
+                <td>${reg.hora}</td>
+                <td><span class="badge ${badgeTipo}">${reg.tipo}</span></td>
+                <td><span class="badge ${badgeEstado}">${reg.estado}</span></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function aplicarFiltros() {
+        let desde = document.getElementById('filtroDesde').value;
+        let hasta = document.getElementById('filtroHasta').value;
+        let empFiltro = document.getElementById('filtroEmpleado').value;
+
+        let filtrados = datosGlobales.filter(reg => {
+            let partes = reg.fecha.split('/');
+            let fechaIso = `${partes[2]}-${partes[1]}-${partes[0]}`;
+
+            let cumpleDesde = desde ? fechaIso >= desde : true;
+            let cumpleHasta = hasta ? fechaIso <= hasta : true;
+            let cumpleEmp = empFiltro ? reg.nombre === empFiltro : true;
+
+            return cumpleDesde && cumpleHasta && cumpleEmp;
+        });
+
+        renderizarTabla(filtrados);
+    }
+
+    function exportarExcelTabla() {
+        let html = `<table>
+            <thead>
+                <tr style="background-color: #21262d; color: #fff;">
+                    <th>DNI</th>
+                    <th>Empleado</th>
+                    <th>Área</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        registrosFiltradosActuales.forEach(r => {
+            html += `<tr>
+                <td>${r.dni}</td>
+                <td>${r.nombre}</td>
+                <td>${r.area}</td>
+                <td>${r.fecha}</td>
+                <td>${r.hora}</td>
+                <td>${r.tipo}</td>
+                <td>${r.estado}</td>
+            </tr>`;
+        });
+
+        html += `</tbody></table>`;
+
+        let blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel' });
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = "Reporte_Asistencia_Ordenado.xls";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    function guardarNuevoEmpleado() {
+        let dni = document.getElementById('nuevoDni').value;
+        let nombre = document.getElementById('nuevoNombre').value;
+        let cargo = document.getElementById('nuevoCargo').value;
+        let foto = imagenActualBase64;
+
+        if(!dni || !nombre) {
+            alert("Complete al menos el DNI y el Nombre.");
+            return;
+        }
+
+        alert("Guardando empleado... por favor espere un segundo.");
+
+        google.script.run.withSuccessHandler(res => {
+            alert(res.message);
+            document.getElementById('nuevoDni').value = "";
+            document.getElementById('nuevoNombre').value = "";
+            document.getElementById('nuevoCargo').value = "";
+            document.getElementById('inputFotoFile').value = "";
+            imagenActualBase64 = "";
+            cargarDatosDashboard();
+        }).guardarEmpleado(dni, nombre, cargo, foto);
+    }
+
+    function editarEmpleado(dni, nombre, cargo) {
+        document.getElementById('nuevoDni').value = dni;
+        document.getElementById('nuevoNombre').value = nombre;
+        document.getElementById('nuevoCargo').value = cargo;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function borrarEmpleado(dni) {
+        if(confirm(`¿Está seguro de eliminar al empleado con DNI ${dni}?`)) {
+            google.script.run.withSuccessHandler(res => {
+                alert(res.message);
+                cargarDatosDashboard();
+            }).eliminarEmpleado(dni);
+        }
+    }
+</script>
+</body>
+</html>
