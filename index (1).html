@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C.A.R. Alianza Yurimaguas</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --alianza-dark: #040D1A;
+            --alianza-blue: #0B2240;
+            --alianza-royal: #1D4ED8;
+            --accent-gold: #C3B077;
+            --accent-gold-light: #D4C38F;
+            --text-light: #F8FAFC;
+            --text-muted: #94A3B8;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-light);
+            background-color: var(--alianza-dark);
+        }
+
+        /* Barra superior con color #C3B077 */
+        .top-bar {
+            background-color: #C3B077;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+            font-size: 0.85rem;
+            color: #040D1A;
+            font-weight: 600;
+        }
+
+        .top-bar a {
+            color: #040D1A;
+            transition: color 0.3s;
+        }
+        .top-bar a:hover {
+            color: #ffffff;
+        }
+
+        /* Navbar */
+        .navbar-custom {
+            background-color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-bottom: 2px solid var(--accent-gold);
+        }
+        .navbar-custom .navbar-brand {
+            color: var(--alianza-blue) !important;
+        }
+        .navbar-custom .nav-link {
+            color: var(--alianza-blue) !important;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .navbar-custom .nav-link:hover {
+            color: var(--accent-gold) !important;
+        }
+        /* Logo Navbar sin bordes y un poco más grande */
+        .brand-logo {
+            width: 58px;
+            height: 58px;
+            object-fit: contain;
+            background: transparent;
+            border: none;
+            padding: 0;
+            box-shadow: none !important;
+        }
+        .btn-call-header {
+            background-color: var(--accent-gold);
+            color: #040D1A;
+            font-weight: 700;
+            border-radius: 30px;
+            padding: 6px 16px;
+            transition: all 0.3s ease;
+        }
+        .btn-call-header:hover {
+            background-color: var(--accent-gold-light);
+            transform: scale(1.05);
+            color: #040D1A;
+        }
+       
+        /* --- Contenedor adaptable a la proporción 3:1 --- */
+.hero-carousel, .carousel-inner, .carousel-item {
+    width: 100%;
+    aspect-ratio: 1500 / 500; /* Mantiene exactamente la proporción de tu banner */
+    height: auto !important;
+    min-height: unset !important;
+    max-height: none !important;
+    overflow: hidden;
+    background-color: #0b172a; /* Fondo de respaldo elegante a los costados si sobra pantalla */
+}
+
+/* --- Forzar que la imagen se adapte completa sin recortarse --- */
+.hero-carousel img, .carousel-item img, .hero-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important; /* Clave: Muestra toda la imagen original sin cortar los bordes */
+    object-position: center center !important;
+}
+
+/* --- Ajuste responsivo para celulares --- */
+@media (max-width: 768px) {
+    .hero-carousel, .carousel-inner, .carousel-item {
+        aspect-ratio: 16 / 9; /* Se adapta mejor a pantallas verticales de celular */
+    }
+}
+        
+        
+
+        /* Sección Quiénes Somos con Fondo Gris Muy Claro (#F2F2F2) */
+        .bg-section-about {
+            background-color: #F2F2F2;
+            color: #1E293B;
+            position: relative;
+            border-top: 2px solid rgba(195, 176, 119, 0.4);
+            border-bottom: 2px solid rgba(195, 176, 119, 0.4);
+        }
+        .bg-section-about .text-light,
+        .bg-section-about .text-muted {
+            color: #475569 !important;
+        }
+        .bg-section-primary {
+            background-color: var(--alianza-dark);
+            position: relative;
+        }
+
+        /* Imagen con esquinas redondeadas asimétricas */
+        .img-hover-container {
+            width: 100%;
+            height: 380px;
+            overflow: hidden;
+            border-radius: 0px 80px 0px 80px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            transition: all 0.5s ease;
+            border: 4px solid var(--accent-gold);
+        }
+        .img-hover-effect {
+            transition: transform 0.5s ease, filter 0.5s ease;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .img-hover-container:hover {
+            border-radius: 80px 0px 80px 0px;
+            box-shadow: 0 20px 45px rgba(195, 176, 119, 0.4);
+            transform: translateY(-5px);
+        }
+        .img-hover-container:hover .img-hover-effect {
+            transform: scale(1.08);
+            filter: brightness(1.1);
+        }
+
+        /* Tarjetas de Valores Rectangulares (Versión fondo claro) */
+        .feature-box-card-light {
+            background: #ffffff;
+            border: 1px solid rgba(195, 176, 119, 0.5);
+            border-radius: 12px;
+            padding: 22px 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .feature-box-card-light:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-gold);
+            background: #ffffff;
+            box-shadow: 0 10px 25px rgba(195, 176, 119, 0.25);
+        }
+
+        /* Cuadros Misión, Visión, Valores (Versión fondo claro) */
+        .square-mission-card-light {
+            width: 100%;
+            max-width: 320px;
+            height: 250px;
+            border-radius: 20px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 0 auto;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            border: 2px solid rgba(195, 176, 119, 0.4);
+        }
+        .square-mission-card-light:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(195, 176, 119, 0.25);
+            background-color: var(--alianza-blue);
+            border-color: var(--accent-gold);
+        }
+        .square-mission-card-light p {
+            font-size: 0.85rem;
+            line-height: 1.35;
+            margin-bottom: 0;
+            color: #475569;
+            transition: color 0.3s;
+        }
+        .square-mission-card-light:hover p {
+            color: var(--text-light);
+        }
+        .square-mission-card-light:hover h5 {
+            color: var(--accent-gold) !important;
+        }
+
+        /* Sección de Programas con Tabs */
+        .programas-section-bg {
+            background-color: #0b172a;
+            position: relative;
+            border-top: 2px solid rgba(195, 176, 119, 0.3);
+            border-bottom: 2px solid rgba(195, 176, 119, 0.3);
+        }
+        .programas-nav .nav-link {
+            color: #ffffff;
+            font-weight: 600;
+            border: 2px solid rgba(195, 176, 119, 0.4);
+            background-color: rgba(11, 34, 64, 0.8);
+            border-radius: 30px;
+            margin: 6px;
+            padding: 10px 22px;
+            transition: all 0.3s;
+        }
+        .programas-nav .nav-link.active {
+            background-color: var(--accent-gold) !important;
+            border-color: var(--accent-gold) !important;
+            color: #040D1A !important;
+            box-shadow: 0 4px 15px rgba(195, 176, 119, 0.4);
+            transform: translateY(-2px);
+        }
+        .programa-card-content {
+            background: rgba(4, 13, 26, 0.9);
+            border: 2px solid var(--accent-gold);
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        /* Galería Tabs (Con fondo #E0E0E0) */
+        .gallery-section-custom {
+            background-color: #E0E0E0;
+            position: relative;
+            border-top: 2px solid rgba(195, 176, 119, 0.3);
+            border-bottom: 2px solid rgba(195, 176, 119, 0.3);
+        }
+        .gallery-nav .nav-link {
+            color: var(--alianza-blue);
+            font-weight: 600;
+            border: 2px solid rgba(195, 176, 119, 0.6);
+            background-color: #ffffff;
+            border-radius: 30px;
+            margin: 5px;
+            padding: 8px 20px;
+            transition: all 0.3s;
+        }
+        .gallery-nav .nav-link.active {
+            background-color: var(--accent-gold) !important;
+            border-color: var(--accent-gold) !important;
+            color: #040D1A !important;
+            box-shadow: 0 4px 15px rgba(195, 176, 119, 0.4);
+        }
+        .gallery-item {
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            height: 250px;
+            border: 1px solid rgba(195, 176, 119, 0.4);
+            background-color: #fff;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Sección Horarios con Fondo Degradado (Gradient) */
+        .schedule-bg-gradient {
+            position: relative;
+           background: linear-gradient(60deg, #2563eb 0%, #1e293b 100%, #0f172a 100%);
+            border-top: 2px solid rgba(195, 176, 119, 0.3);
+            border-bottom: 2px solid rgba(195, 176, 119, 0.3);
+        }
+        .schedule-main-card {
+            background-color: rgba(4, 13, 26, 0.88);
+            border: 1px solid rgba(195, 176, 119, 0.3);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        .schedule-main-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 40px rgba(195, 176, 119, 0.3);
+            border-color: var(--accent-gold);
+        }
+        .schedule-header-red {
+            background: linear-gradient(135deg, #991B1B, #DC2626);
+        }
+        .schedule-header-blue {
+            background: linear-gradient(135deg, #0B2240, #1D4ED8);
+        }
+        .schedule-card-item {
+            transition: all 0.3s ease;
+            background-color: rgba(11, 34, 64, 0.75);
+            border: 1px solid rgba(195, 176, 119, 0.2);
+            border-radius: 12px;
+        }
+        .schedule-card-item:hover {
+            transform: translateX(4px);
+            background-color: rgba(29, 78, 216, 0.35);
+            border-color: var(--accent-gold);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        /* Sección Staff y Profesores con Fondo Degradado (Gradient) */
+        .staff-bg-gradient {
+            position: relative;
+          background: linear-gradient(80deg, #0f172a 10%, #2563eb 60%, #1e293b 800%);
+            border-top: 2px solid rgba(195, 176, 119, 0.3);
+            border-bottom: 2px solid rgba(195, 176, 119, 0.3);
+        }
+        .staff-card {
+            border: 1px solid rgba(195, 176, 119, 0.3);
+            border-radius: 16px;
+            background: rgba(4, 13, 26, 0.85);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .staff-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 15px 35px rgba(195, 176, 119, 0.3);
+        }
+        .profile-img-wrapper {
+            position: relative;
+            width: 170px;
+            height: 170px;
+            margin: 0 auto;
+        }
+        .profile-img {
+            width: 170px;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--accent-gold);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .staff-card:hover .profile-img {
+            transform: scale(1.06);
+            box-shadow: 0 12px 25px rgba(195, 176, 119, 0.4);
+        }
+
+        /* Sección Contáctenos con Fondo Claro, Limpio y Visible */
+        .contact-section-light {
+            background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+            color: #1E293B;
+            position: relative;
+            border-top: 3px solid var(--accent-gold);
+            border-bottom: 2px solid #cbd5e1;
+        }
+        .contact-card-light-box {
+            background: #ffffff;
+            border: 1px solid rgba(195, 176, 119, 0.5);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+        }
+        .form-control-light, .form-select-light {
+            background-color: #f8fafc !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #1e293b !important;
+        }
+        .form-control-light:focus, .form-select-light:focus {
+            border-color: var(--accent-gold) !important;
+            background-color: #ffffff !important;
+            box-shadow: 0 0 10px rgba(195, 176, 119, 0.3) !important;
+        }
+        .form-control-light::placeholder {
+            color: #94a3b8;
+        }
+
+        /* Sección de Auspiciadores: Fondo Blanco */
+        .sponsors-section-white {
+            background-color: #ffffff;
+            border-top: 3px solid var(--accent-gold);
+            border-bottom: 2px solid #e2e8f0;
+            overflow: hidden;
+            padding: 60px 0;
+        }
+        .sponsors-title-badge {
+            background-color: var(--alianza-blue);
+            color: var(--accent-gold);
+            font-weight: 700;
+            letter-spacing: 1px;
+            border-radius: 30px;
+            padding: 6px 20px;
+            display: inline-block;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 10px rgba(11, 34, 64, 0.15);
+        }
+        .sponsors-main-title {
+            color: var(--alianza-blue);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .sponsors-subtitle {
+            color: #64748b;
+            font-weight: 400;
+            font-size: 0.95rem;
+        }
+        .sponsors-slider-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+            padding: 15px 0;
+        }
+        .sponsors-slider {
+            display: flex;
+            width: max-content;
+            animation: scrollSponsors 28s linear infinite;
+        }
+        .sponsors-slider:hover {
+            animation-play-state: paused;
+        }
+        .sponsor-slide-item-white {
+            width: 190px;
+            height: 100px;
+            margin: 0 15px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            transition: all 0.35s ease;
+            flex-shrink: 0;
+        }
+        .sponsor-slide-item-white img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%) contrast(120%);
+            opacity: 0.6;
+            transition: all 0.35s ease;
+        }
+        .sponsor-slide-item-white:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(195, 176, 119, 0.2);
+            background: #ffffff;
+        }
+        .sponsor-slide-item-white:hover img {
+            filter: grayscale(0%) contrast(100%);
+            opacity: 1;
+            transform: scale(1.08);
+        }
+
+        @keyframes scrollSponsors {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-220px * 8)); }
+        }
+
+        /* Redes Sociales */
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.25rem;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid rgba(195, 176, 119, 0.4);
+        }
+        .social-btn.facebook { background-color: #1877F2; }
+        .social-btn.instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+        .social-btn.tiktok { background-color: #000000; }
+        .social-btn.whatsapp { background-color: #25D366; }
+
+        .social-btn:hover {
+            transform: translateY(-6px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(195, 176, 119, 0.4);
+            color: #fff;
+        }
+
+        /* Footer y Barra Inferior Fina y Delgada */
+        footer {
+            background: linear-gradient(135deg, var(--alianza-dark), var(--alianza-blue));
+            border-top: 2px solid var(--accent-gold);
+            color: var(--text-light);
+        }
+        .footer-top {
+            padding: 40px 0 25px 0;
+            text-align: center;
+        }
+        /* Logo Footer sin bordes y más grande */
+        .footer-logo-img {
+            width: 105px;
+            height: 105px;
+            object-fit: contain;
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin-bottom: 12px;
+            box-shadow: none !important;
+        }
+        .footer-brand-title {
+            color: #ffffff;
+            font-weight: 800;
+            letter-spacing: 2px;
+            font-size: 1.25rem;
+            margin-bottom: 4px;
+        }
+        .footer-brand-subtitle {
+            color: var(--accent-gold);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        /* Barra inferior delgada y fina */
+        .footer-bottom {
+            background-color: #C3B077;
+            color: #040D1A;
+            padding: 6px 0;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-top: 1px solid rgba(0, 0, 0, 0.15);
+        }
+        .footer-bottom span {
+            color: #ffffff;
+            font-weight: 700;
+            background-color: var(--alianza-blue);
+            padding: 1px 6px;
+            border-radius: 3px;
+        }
+.hero-img {
+    height: 100vh;           /* O la altura fija que prefieras, ej: 600px */
+    object-fit: cover;       /* Ajusta la imagen para que llene el espacio sin perder proporción */
+    object-position: center; /* Centra la imagen perfectamente */
+}
+
+/* Posiciona el texto correctamente encima de la imagen limpia */
+.carousel-caption {
+    bottom: 20%;
+    z-index: 10;
+
+}
+        .hero-img {
+    width: 100%;
+    height: 100vh;           /* O una altura fija como 600px */
+    object-fit: cover;       /* Evita que la imagen se deforme */
+    object-position: center;
+}
+
+/* Asegurar que el carrusel ocupe toda la altura */
+.hero-carousel, .carousel-inner, .carousel-item {
+    height: 100vh;
+    min-height: 500px;
+}
+    </style>
+</head>
+<body>
+
+    <!-- Barra Superior -->
+    <div class="top-bar py-2 d-none d-lg-block">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+                <span><i class="fa-solid fa-star text-dark"></i> C.A.R. Oficial Alianza Yurimaguas</span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <span class="fw-bold text-dark">SÍGUENOS EN:</span>
+                <a href="https://www.facebook.com/centrodealtorendimientoalianzayurimaguas/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://wa.me/51952885491" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar con el Logo sin bordes y más grande -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
+                <img src="https://lh3.googleusercontent.com/d/17JDIoVGBYP6cArzftpmsLpDJ8mXzB0ZG=w400" alt="Logo C.A.R. Alianza Yurimaguas" class="brand-logo">
+                <span>C.A.R. Alianza Ygs</span>
+            </a>
+            <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link" href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#quienes-somos"><i class="fa-solid fa-users"></i> Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#programas"><i class="fa-solid fa-graduation-cap"></i> Programas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#galeria"><i class="fa-solid fa-images"></i>Fotos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#horarios"><i class="fa-solid fa-clock"></i> Horarios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#profesores"><i class="fa-solid fa-chalkboard-user"></i> Staff</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#auspiciadores"><i class="fa-solid fa-handshake"></i> Auspiciadores</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacto"><i class="fa-solid fa-envelope"></i> Contáctenos</a></li>
+                    <li class="nav-item">
+                        <a class="btn btn-call-header btn-sm px-3 d-flex align-items-center gap-2" href="tel:+51952885491">
+                            <i class="fa-solid fa-phone-volume"></i> 952885491
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    
+<!-- Hero Slider Principal -->
+    <header id="inicio">
+        <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+            </div>
+            
+            <div class="carousel-inner">
+                <!-- Slide 1: Imagen directa 1 -->
+                <div class="carousel-item active">
+                    <img src="img/slider4.png" class="d-block w-100 hero-img" alt="Slider 1">
+                    <div class="carousel-caption d-none d-md-block text-start">
+                        <span class="badge mb-3 px-3 py-2 fw-bold text-dark" style="background-color: #C3B077;"></span>
+                        <h1 class="display-3 fw-extrabold mb-3"></h1>
+                        <p class="lead mb-4 fs-4 text-light"></p>
+                        <div class="d-flex gap-3">
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Imagen directa 2 -->
+                <div class="carousel-item">
+                    <img src="img/slider8.jpg" class="d-block w-100 hero-img" alt="Slider 2">
+                    <div class="carousel-caption d-none d-md-block text-start">
+                        <span class="badge bg-danger mb-3 px-3 py-2 fw-bold"></span>
+                        <h1 class="display-3 fw-extrabold mb-3"></h1>
+                        <p class="lead mb-4 fs-4 text-light"></p>
+                        <div class="d-flex gap-3">
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Imagen directa 3 -->
+                <div class="carousel-item">
+                    <img src="img/slider6.png" class="d-block w-100 hero-img" alt="Slider 3">
+                    <div class="carousel-caption d-none d-md-block text-start">
+                        <span class="badge bg-primary mb-3 px-3 py-2 fw-bold"></span>
+                        <h1 class="display-3 fw-extrabold mb-3"></h1>
+                        <p class="lead mb-4 fs-4 text-light"></p>
+                        <div class="d-flex gap-3">
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+        </div>
+    </header>
+<!-- Quiénes Somos con Fondo Gris Muy Claro (#F2F2F2) -->
+    <section id="quienes-somos" class="py-5 bg-section-about">
+        <div class="container py-4">
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-7">
+                    <h2 class="section-title mb-3 fw-bold" style="color: var(--alianza-blue);"><i class="fa-solid fa-shield-halved"></i> Quiénes Somos</h2>
+                    <p class="fs-5 opacity-90" style="color: #334155;">Somos la academia oficial <strong>C.A.R. Alianza Yurimaguas</strong>, un club enfocado en el desarrollo integral deportivo, técnico y humano de niños y jóvenes. Más que un club de fútbol, somos una gran familia deportiva orientada a la alta competencia y valores éticos.
+                    </BR>Nuestro propósito principal es transformar la pasión por el fútbol en un motor de crecimiento personal y profesional, preparando a las nuevas generaciones tanto para destacar en torneos oficiales como para triunfar en los retos de la vida.
+.</p>
+                    
+                    <div class="row text-center mt-4 g-3">
+                        <div class="col-4">
+                            <div class="feature-box-card-light">
+                                <i class="fa-solid fa-trophy fs-3 mb-2" style="color: #b89735 !important;"></i>
+                                <h6 class="fw-bold mb-0 text-dark">Disciplina</h6>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="feature-box-card-light">
+                                <i class="fa-solid fa-heart text-danger fs-3 mb-2"></i>
+                                <h6 class="fw-bold mb-0 text-dark">Respeto</h6>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="feature-box-card-light">
+                                <i class="fa-solid fa-fire text-success fs-3 mb-2"></i>
+                                <h6 class="fw-bold mb-0 text-dark">Pasión</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 mt-4 mt-lg-0">
+                    <div class="img-hover-container">
+                        
+                        <img src="img/slider2.jpg" alt="Entrenamiento Alianza Yurimaguas" class="img-fluid img-hover-effect">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4 mt-5 text-center">
+                <div class="col-md-4">
+                    <div class="square-mission-card-light">
+                        <div class="mb-2"><i class="fa-solid fa-bullseye fs-3" style="color: #b89735 !important;"></i></div>
+                        <h5 class="fw-bold mb-2 fs-6" style="color: var(--alianza-blue);">Nuestra Misión</h5>
+                        <p>Formar integralmente a niños y jóvenes a través del fútbol, potenciando sus habilidades técnicas y físicas.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="square-mission-card-light">
+                        <div class="mb-2"><i class="fa-solid fa-eye fs-3" style="color: #b89735 !important;"></i></div>
+                        <h5 class="fw-bold mb-2 fs-6" style="color: var(--alianza-blue);">Nuestra Visión</h5>
+                        <p>Consolidarnos como la academia líder en la región Loreto y referente nacional en talentos.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="square-mission-card-light">
+                        <div class="mb-2"><i class="fa-solid fa-handshake-angle fs-3" style="color: #b89735 !important;"></i></div>
+                        <h5 class="fw-bold mb-2 fs-6" style="color: var(--alianza-blue);">Nuestros Valores</h5>
+                        <p>Disciplina, respeto, pasión, lealtad y trabajo en equipo fomentando la unión familiar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN NUEVA: Programas por Edades y Categorías SUB -->
+    <section id="programas" class="py-5 programas-section-bg text-white">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <span class="badge mb-2 px-3 py-2 fw-bold text-dark" style="background-color: #C3B077;"><i class="fa-solid fa-list-check"></i> NUESTROS PROGRAMAS</span>
+                <h2 class="fw-bold display-6" style="color: #C3B077;">Programas Según Edades y Categorías SUB</h2>
+                <p class="text-light opacity-75">Selecciona un programa para conocer las categorías, objetivos y metodologías de entrenamiento.</p>
+            </div>
+
+            <!-- Tabs de Navegación de Programas -->
+            <ul class="nav nav-pills justify-content-center programas-nav mb-5" id="programasTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="framakids-tab" data-bs-toggle="pill" data-bs-target="#framakids" type="button"><i class="fa-solid fa-child me-2"></i> CAR Kids</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="futbolbase-tab" data-bs-toggle="pill" data-bs-target="#futbolbase" type="button"><i class="fa-solid fa-futbol me-2"></i> Fútbol Base</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="adultos-tab" data-bs-toggle="pill" data-bs-target="#adultos" type="button"><i class="fa-solid fa-user-tie me-2"></i> Fútbol Juvenil</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="arqueros-tab" data-bs-toggle="pill" data-bs-target="#arqueros" type="button"><i class="fa-solid fa-hands-bubbles me-2"></i> Escuela de Arqueros</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="femenino-tab" data-bs-toggle="pill" data-bs-target="#femenino" type="button"><i class="fa-solid fa-venus me-2"></i> Clases Personalizadas</button>
+                </li>
+                 <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="primera-tab" data-bs-toggle="pill" data-bs-target="#primera" type="button"><i class="fa-solid fa-venus me-2"></i> Primera División</button>
+                </li>
+            </ul>
+
+            <!-- Contenido de los Tabs de Programas -->
+            <div class="tab-content" id="programasTabContent">
+                
+                <!-- 1. Frama Kids -->
+                <div class="tab-pane fade show active" id="framakids" role="tabpanel">
+                    <div class="programa-card-content">
+                        <div class="row align-items-center">
+                            <div class="col-lg-7">
+                                <span class="badge bg-success mb-2 px-3 py-1">Iniciación Temprana</span>
+                                <h3 class="fw-bold mb-3" style="color: #C3B077;">Programa BABY FUTBOL</h3>
+                                <p class="text-light opacity-90 fs-5 mb-3">Diseñado especialmente para los más pequeños del hogar. Fomenta la psicomotricidad, el juego lúdico y el contacto inicial con el balón mediante dinámicas divertidas.</p>
+                                <ul class="list-unstyled text-light opacity-80 mb-4">
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Edades:</strong> 4 a 6 años (SUB 06 Inicial)</li>
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Enfoque:</strong> Coordinación motriz gruesa y socialización</li>
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Ambiente:</strong> Seguro, lúdico y 100% recreativo</li>
+                                </ul>
+                                <a href="#contacto" class="btn fw-bold text-dark px-4 py-2" style="background-color: #C3B077;"><i class="fa-solid fa-whatsapp"></i> Inscríbete Ahora</a>
+                            </div>
+                            <div class="col-lg-5 mt-4 mt-lg-0 text-center">
+                               
+                                <img src="img/sub06.jpg" alt="Frama Kids" class="img-fluid rounded-4 shadow border border-warning">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Fútbol Base -->
+                <div class="tab-pane fade" id="futbolbase" role="tabpanel">
+                    <div class="programa-card-content">
+                        <div class="row align-items-center">
+                            <div class="col-lg-7">
+                                <span class="badge bg-primary mb-2 px-3 py-1">Formación y Competencia</span>
+                                <h3 class="fw-bold mb-3" style="color: #C3B077;">Programa Fútbol Base (Edades entre 7 a 15 años)</h3>
+                                <p class="text-light opacity-90 fs-5 mb-3">El núcleo de nuestra academia. Dividido en etapas formativas y competitivas para perfeccionar la técnica individual, táctica colectiva y preparación física.</p>
+                                <ul class="list-unstyled text-light opacity-80 mb-4">
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Categorías:</strong> SUB 08 (Formativo y Competitivo), SUB 09-10, SUB 11-12-13, SUB 14-15</li>
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Enfoque:</strong> Fundamentos técnicos, táctica de juego y participación en torneos oficiales, CRECIENDO CON EL FUTBOL, COPA FEDERATIVA, WAWAFUTBOL Y TORNEOS NACIONALES.</li>
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Metodología:</strong> Guía profesional con entrenadores certificados Licencia FUTEC.</li>
+                                </ul>
+                                <a href="#contacto" class="btn fw-bold text-dark px-4 py-2" style="background-color: #C3B077;"><i class="fa-solid fa-whatsapp"></i> Inscríbete Ahora</a>
+                            </div>
+                            <div class="col-lg-5 mt-4 mt-lg-0 text-center">
+                                <img src="img/futbolbase.jpg"  alt="Fútbol Base" class="img-fluid rounded-4 shadow border border-warning">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Fútbol para Adultos -->
+                <div class="tab-pane fade" id="adultos" role="tabpanel">
+                    <div class="programa-card-content">
+                        <div class="row align-items-center">
+                            <div class="col-lg-7">
+                                <span class="badge bg-danger mb-2 px-3 py-1">Entrenamiento Competitivo</span>
+                                <h3 class="fw-bold mb-3" style="color: #C3B077;">Programa Fútbol Juvenil</h3>
+                                <p class="text-light opacity-90 fs-5 mb-3">Espacio diseñado para jóvenes talentos que quieren llevar su nivel al siguiente nivel, pulir su técnica, su físico, competir con intensidad, Perfeccionamiento táctico, listos para competir en cualquier torneo .</p>
+                                <ul class="list-unstyled text-light opacity-80 mb-4">
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Público:</strong> edades de 16 a 17 años / Categoría SUB 17</li>
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Enfoque:</strong> Jóvenes en etapa de formación competitiva, Perfeccionamiento técnico-táctico, alta intensidad y mentalidad ganadora.</li>
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Horarios:</strong> Entrenamos 3 veces por semana.</li>
+                                </ul>
+                                <a href="#contacto" class="btn fw-bold text-dark px-4 py-2" style="background-color: #C3B077;"><i class="fa-solid fa-whatsapp"></i> Inscríbete Ahora</a>
+                            </div>
+                            <div class="col-lg-5 mt-4 mt-lg-0 text-center">
+                                <img src="img/futboljuvenil.jpg" alt="Fútbol Adultos" class="img-fluid rounded-4 shadow border border-warning">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Escuela de Arqueros -->
+                <div class="tab-pane fade" id="arqueros" role="tabpanel">
+                    <div class="programa-card-content">
+                        <div class="row align-items-center">
+                            <div class="col-lg-7">
+                                <span class="badge bg-warning text-dark mb-2 px-3 py-1 fw-bold">Especializado</span>
+                                <h3 class="fw-bold mb-3" style="color: #C3B077;">Escuela de Arqueros C.A.R.</h3>
+                                <p class="text-light opacity-90 fs-5 mb-3">Programa de entrenamiento específico para guardametas. Desarrollamos reflejos, técnica de blocaje, juego aéreo, salidas y posicionamiento táctico bajo los tres palos.</p>
+                                <ul class="list-unstyled text-light opacity-80 mb-4">
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Edades:</strong> Desde los 8 años hasta los 17 años - categoría juvenil</li>
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Enfoque:</strong> Trabajo físico específico, agilidad y seguridad defensiva</li>
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Entrenador:</strong> Preparador exclusivo de arqueros</li>
+                                </ul>
+                                <a href="#contacto" class="btn fw-bold text-dark px-4 py-2" style="background-color: #C3B077;"><i class="fa-solid fa-whatsapp"></i> Inscríbete Ahora</a>
+                            </div>
+                            <div class="col-lg-5 mt-4 mt-lg-0 text-center">
+                                <img src="img/fabio.jpg" alt="Escuela de Arqueros" class="img-fluid rounded-4 shadow border border-warning">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. clases personalizado -->
+                <div class="tab-pane fade" id="femenino" role="tabpanel">
+                    <div class="programa-card-content">
+                        <div class="row align-items-center">
+                            <div class="col-lg-7">
+                                <span class="badge bg-info text-dark mb-2 px-3 py-1 fw-bold">Entrenamientos 100% Competitivo</span>
+                                <h3 class="fw-bold mb-3" style="color: #C3B077;">Programa - Entrenamiento Personalizado</h3>
+                                <p class="text-light opacity-90 fs-5 mb-3">Un espacio de entrenamiento exclusivo y adaptado al 100% al ritmo, necesidades y objetivos individuales de cada jugador o jugadora, maximizando su potencial técnico y táctico bajo una metodología de alto rendimiento.</p>
+                                <ul class="list-unstyled text-light opacity-80 mb-4">
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Edades:</strong> Categorías formativas y juveniles Niños y jóvenes de 8 a 17 años que desean dar un salto de calidad en su juego. </li>
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>👥 ¿A quiénes van dirigidas?</strong> Jugadores en formación que necesitan reforzar fundamentos técnicos específicos (control, golpeo, perfil, conducción).
+Atletas con aspiraciones competitivas que buscan un seguimiento individualizado para destacar en sus equipos, categorías o torneos oficiales.
+Jóvenes que requieren nivelación física o táctica para adaptarse con confianza a exigencias de alta competencia.</li>
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>🚀 ¿Qué van a aprender y desarrollar?</strong> 
+A través de sesiones enfocadas estrictamente en el desarrollo personal del deportista, los alumnos trabajarán y aprenderán:
+
+Dominio Técnico Individual (Hard Skills):
+
+Perfeccionamiento del control orientado y la recepción bajo presión.
+
+Precisión y variedad en el golpeo de balón (pases largos, cortos, remates al arco).
+
+Habilidades de 1v1 tanto en faceta ofensiva (regate y desborde) como defensiva (anticipación y temporización).
+
+Inteligencia Táctica en la Cancha:
+
+Lectura de juego: saber decidir rápido y bien según los espacios y la posición de los rivales.
+
+Comprensión de conceptos tácticos por posición y movilidad inteligente sin balón.
+
+Capacidades Físicas Aplicadas al Fútbol:
+
+Agilidad, coordinación, velocidad de reacción y cambios de ritmo explosivos.
+
+Prevención de lesiones mediante fortalecimiento muscular específico para la edad de crecimiento.
+
+Mentalidad, Liderazgo y Confianza:
+
+Desarrollo de la resiliencia, la concentración y la autoconfianza dentro y fuera del campo.
+
+Disciplina deportiva, mentalidad ganadora y capacidad de automotivación ante la exigencia.
+
+¡Potencia las virtudes de tu juego al máximo con un entrenamiento diseñado solo para ti!</li>
+                                </ul>
+                                <a href="#contacto" class="btn fw-bold text-dark px-4 py-2" style="background-color: #C3B077;"><i class="fa-solid fa-whatsapp"></i> Inscríbete Ahora</a>
+                            </div>
+                            <div class="col-lg-5 mt-4 mt-lg-0 text-center">
+                                <img src="img/personalizado.jpg" alt="Fútbol Femenino" class="img-fluid rounded-4 shadow border border-warning">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 5. PRIMER DIVISION -->
+                <div class="tab-pane fade" id="primera" role="tabpanel">
+                    <div class="programa-card-content">
+                        <div class="row align-items-center">
+                            <div class="col-lg-7">
+                                <span class="badge bg-info text-dark mb-2 px-3 py-1 fw-bold">Primera División - Copa Perú - Yurimaguas</span>
+                                <h3 class="fw-bold mb-3" style="color: #C3B077;">Programa COPA PERU-PRIMERA DIVISION</h3>
+                                <p class="text-light opacity-90 fs-5 mb-3">Actualmente nuestro esquipo del C.A.R. ALIANZA YURIMAGUAS, Está participando en la copa Perú, enfrentando a diferentes equipos de alto amazonas y loreto</p>
+                                <ul class="list-unstyled text-light opacity-80 mb-4">
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Edades:</strong> Particpan los jovenes con talentos de edades entre 15 a 25 años de edad</li>
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Convocatoria:</strong> </li> La convocatoria es Libre para aquellos jovenes que quieran defender y vestir estos colores y sobre todo demostrar sus talento. 
+                                    <li class="mb-2"><i class="fa-solid fa-circle-check text-warning me-2"></i> <strong>Oportunidades:</strong> Este campeonato da la oportunidad y a la vez sirve como una vitrina para mostrarse en la COPA PERU y mas adelante tengan una mejor oportunidad de que otros equipos de ligas mayores los puedan llevar a sus filas, como jugadores de alta competencia y puedan jugar en una liga muy competitiva.</li>
+                                </ul>
+                                <a href="#contacto" class="btn fw-bold text-dark px-4 py-2" style="background-color: #C3B077;"><i class="fa-solid fa-whatsapp"></i> Inscríbete Ahora</a>
+                            </div>
+                            <div class="col-lg-5 mt-4 mt-lg-0 text-center">
+                                <img src="img/primera.jpg" alt="Fútbol Femenino" class="img-fluid rounded-4 shadow border border-warning">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Galería de Fotos Actualizada (Fanpage Oficial ID: 100702082623195) -->
+    <section id="galeria" class="py-5 gallery-section-custom">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <span class="badge mb-2 px-3 py-2 fw-bold text-dark" style="background-color: #C3B077;"><i class="fa-brands fa-facebook"></i> GALERIA DE IMAGENES</span>
+                <h2 class="fw-bold text-dark display-6">Galería de Fotos</h2>
+                <p class="text-secondary fw-medium">Momentos destacados, entrenamientos, torneos y eventos compartidos en nuestra página.</p>
+            </div>
+
+            <ul class="nav nav-pills justify-content-center gallery-nav mb-5" id="galleryTab" role="tablist">
+                <li class="nav-item" role="presentation"><button class="nav-link active" id="all-tab" data-bs-toggle="pill" data-bs-target="#all" type="button">Todas las Fotos</button></li>
+                <li class="nav-item" role="presentation"><button class="nav-link" id="sub06-tab" data-bs-toggle="pill" data-bs-target="#sub06" type="button">Categorías Base</button></li>
+                <li class="nav-item" role="presentation"><button class="nav-link" id="competitivo-tab" data-bs-toggle="pill" data-bs-target="#competitivo" type="button">Partidos y Torneos</button></li>
+                <li class="nav-item" role="presentation"><button class="nav-link" id="instalaciones-tab" data-bs-toggle="pill" data-bs-target="#instalaciones" type="button">Mas Fotos</button></li>
+            </ul>
+
+            <div class="tab-content" id="galleryTabContent">
+                <div class="tab-pane fade show active" id="all" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/1.jpg" alt="Fanpage Foto 1"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/2.jpg" alt="Fanpage Foto 2"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/3.jpg"  alt="Fanpage Foto 3"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/4.jpg"  alt="Fanpage Foto 4"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/5.jpg"  alt="Fanpage Foto 5"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/13.jpg"  alt="Fanpage Foto 6"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/7.jpg"  alt="Fanpage Foto 7"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/8.jpg"  alt="Fanpage Foto 8"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/15.jpg"  alt="Fanpage Foto 9"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/18.jpg"  alt="Fanpage Foto 10"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/17.jpg"  alt="Fanpage Foto 11"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/12.jpg"  alt="Fanpage Foto 12"></div></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="sub06" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/4.jpg" alt="Categorías Base 1"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/23.jpg" alt="Categorías Base 2"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/7.jpg" alt="Categorías Base 3"></div></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="competitivo" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/13.jpg" alt="Torneo 1"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/7.jpg" alt="Torneo 2"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/8.jpg" alt="Torneo 3"></div></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="instalaciones" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/1.jpg"  alt="Evento 1"></div></div>
+                        <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="img/2.jpg"  alt="Evento 2"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón para visitar la Fanpage de Facebook directamente -->
+            <div class="text-center mt-5">
+                <a href="https://www.facebook.com/centrodealtorendimientoalianzayurimaguas/" target="_blank" class="btn btn-primary btn-lg fw-bold px-4 py-3 shadow" style="background-color: #1877F2; border: none;">
+                    <i class="fa-brands fa-facebook fs-5 me-2"></i> Ver todas las fotos y álbumes en la Fanpage de Facebook
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Horarios de Entrenamientos con Fondo Degradado (Gradient) -->
+    <section id="horarios" class="py-5 schedule-bg-gradient text-white">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <span class="badge mb-2 px-3 py-2 fw-bold rounded-pill text-dark" style="background-color: #C3B077 !important;">★★★ CATEGORÍAS OFICIALES ★★★</span>
+                <h2 class="fw-bold display-5 mb-2" style="color: #C3B077;">Horarios de Entrenamientos</h2>
+                <p class="text-light opacity-75">C.A.R. Alianza Yurimaguas - <span class="fw-semibold" style="color: #C3B077;">¡Ven, entrena y construye tu sueño!</span></p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="schedule-main-card">
+                        <div class="schedule-header-red p-3 px-4 d-flex justify-content-between align-items-center text-white">
+                            <h5 class="m-0 fw-bold fs-6 fs-md-5"><i class="fa-solid fa-calendar-days me-2"></i> LUNES – MIÉRCOLES – VIERNES</h5>
+                            <span class="badge bg-black bg-opacity-25 px-3 py-2"><i class="fa-regular fa-clock me-1" style="color: #C3B077;"></i> Turno Tarde</span>
+                        </div>
+                        <div class="p-3 p-md-4 d-flex flex-column gap-3">
+                            <div class="schedule-card-item p-3 d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-primary bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 42px; height: 42px; color: #C3B077;">
+                                        <i class="fa-solid fa-futbol"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="m-0 fw-bold text-white fs-6">SUB 08 – COMPETITIVO</h6>
+                                        <small class="text-white-50 fs-7">Formación de Alta Competencia</small>
+                                    </div>
+                                </div>
+                                <div class="bg-dark border border-primary border-opacity-50 px-3 py-2 rounded-3 fw-bold shadow-sm flex-shrink-0" style="color: #C3B077;">
+                                    <i class="fa-regular fa-clock me-1 small"></i> 05:00 PM
+                                </div>
+                            </div>
+                            <div class="schedule-card-item p-3 d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-primary bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 42px; height: 42px; color: #C3B077;">
+                                        <i class="fa-solid fa-futbol"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="m-0 fw-bold text-white fs-6">SUB 06</h6>
+                                        <small class="text-white-50 fs-7">Iniciación y Coordinación Motriz</small>
+                                    </div>
+                                </div>
+                                <div class="bg-dark border border-primary border-opacity-50 px-3 py-2 rounded-3 fw-bold shadow-sm flex-shrink-0" style="color: #C3B077;">
+                                    <i class="fa-regular fa-clock me-1 small"></i> 06:15 PM
+                                </div>
+                            </div>
+                            <div class="schedule-card-item p-3 d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-primary bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 42px; height: 42px; color: #C3B077;">
+                                        <i class="fa-solid fa-futbol"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="m-0 fw-bold text-white fs-6">SUB 08 – FORMATIVO</h6>
+                                        <small class="text-white-50 fs-7">Desarrollo de Fundamentos</small>
+                                    </div>
+                                </div>
+                                <div class="bg-dark border border-primary border-opacity-50 px-3 py-2 rounded-3 fw-bold shadow-sm flex-shrink-0" style="color: #C3B077;">
+                                    <i class="fa-regular fa-clock me-1 small"></i> 07:15 PM
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="schedule-main-card">
+                        <div class="schedule-header-blue p-3 px-4 d-flex justify-content-between align-items-center text-white">
+                            <h5 class="m-0 fw-bold fs-6 fs-md-5"><i class="fa-solid fa-calendar-days me-2"></i> MARTES – JUEVES – SÁBADOS</h5>
+                            <span class="badge bg-black bg-opacity-25 px-3 py-2"><i class="fa-regular fa-clock me-1" style="color: #C3B077;"></i> Turno Tarde</span>
+                        </div>
+                        <div class="p-3 p-md-4 d-flex flex-column gap-3">
+                            <div class="schedule-card-item p-3 d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-primary bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 42px; height: 42px; color: #C3B077;">
+                                        <i class="fa-solid fa-futbol"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="m-0 fw-bold text-white fs-6">SUB 14 – 15 – 16</h6>
+                                        <small class="text-white-50 fs-7">Categoría Juvenil Avanzada</small>
+                                    </div>
+                                </div>
+                                <div class="bg-dark border border-primary border-opacity-50 px-3 py-2 rounded-3 fw-bold shadow-sm flex-shrink-0" style="color: #C3B077;">
+                                    <i class="fa-regular fa-clock me-1 small"></i> 05:00 PM
+                                </div>
+                            </div>
+                            <div class="schedule-card-item p-3 d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-primary bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 42px; height: 42px; color: #C3B077;">
+                                        <i class="fa-solid fa-futbol"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="m-0 fw-bold text-white fs-6">SUB 11 – 12 – 13</h6>
+                                        <small class="text-white-50 fs-7">Táctica y Consolidación</small>
+                                    </div>
+                                </div>
+                                <div class="bg-dark border border-primary border-opacity-50 px-3 py-2 rounded-3 fw-bold shadow-sm flex-shrink-0" style="color: #C3B077;">
+                                    <i class="fa-regular fa-clock me-1 small"></i> 06:30 PM
+                                </div>
+                            </div>
+                            <div class="schedule-card-item p-3 d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-primary bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 42px; height: 42px; color: #C3B077;">
+                                        <i class="fa-solid fa-futbol"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="m-0 fw-bold text-white fs-6">SUB 09 – 10</h6>
+                                        <small class="text-white-50 fs-7">Desarrollo Técnico Intermedio</small>
+                                    </div>
+                                </div>
+                                <div class="bg-dark border border-primary border-opacity-50 px-3 py-2 rounded-3 fw-bold shadow-sm flex-shrink-0" style="color: #C3B077;">
+                                    <i class="fa-regular fa-clock me-1 small"></i> 07:30 PM
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
+                <h4 class="fw-bold tracking-wider text-uppercase" style="color: #C3B077; letter-spacing: 2px;">¡SOMOS ALIANZA, SOMOS FAMILIA!</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- Staff, Profesores con Fondo Degradado (Gradient) -->
+    <section id="profesores" class="py-5 staff-bg-gradient">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <h2 class="section-title fw-bold" style="color: #C3B077;"><i class="fa-solid fa-chalkboard-user"></i> Nuestros Profesores y Staff</h2>
+                <p class="text-muted text-white-50">Staff profesional especializado en divisiones menores, alta competencia y gestión institucional.</p>
+            </div>
+            
+            <div class="row g-4 text-center">
+                <div class="col-lg-3 col-md-6">
+                    <div class="card staff-card p-4 h-100">
+                        <div class="mb-4 profile-img-wrapper">
+                            <img src="img/michel.jpg"alt="Profesor Técnico" class="profile-img">
+                        </div>
+                        <h5 class="fw-bold mb-1 text-white">Prof. Michel Delgado</h5>
+                        <p class="small fw-semibold mb-2" style="color: #C3B077;">Licencia B - FUTEC</p>
+                        <p class="text-muted small mb-0 text-white-50">Entrenador de menores y juvenil.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card staff-card p-4 h-100">
+                        <div class="mb-4 profile-img-wrapper">
+                            <img src="img/francisco.jpg" alt="Profesor Formador" class="profile-img">
+                        </div>
+                        <h5 class="fw-bold mb-1 text-white">Prof. Francisco Rios</h5>
+                        <p class="small fw-semibold mb-2" style="color: #C3B077;">Licencia B - FUTEC</p>
+                        <p class="text-muted small mb-0 text-white-50">Entrenador de menores y juvenil.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card staff-card p-4 h-100">
+                        <div class="mb-4 profile-img-wrapper">
+                            <img src="img/jairo.jpg" alt="Asistente Técnico" class="profile-img">
+                        </div>
+                        <h5 class="fw-bold mb-1 text-white">Prof. Jairo Celis</h5>
+                        <p class="small fw-semibold mb-2" style="color: #C3B077;">Licencia C - FUTEC</p>
+                        <p class="text-muted small mb-0 text-white-50">Entrenador de Menores</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card staff-card p-4 h-100">
+                        <div class="mb-4 profile-img-wrapper">
+                            <img src="img/liz.jpg" alt="Secretaría" class="profile-img">
+                        </div>
+                        <h5 class="fw-bold mb-1 text-white">Srta: Liz Ramirez</h5>
+                        <p class="small fw-semibold mb-2" style="color: #C3B077;">Secretaría</p>
+                        <p class="text-muted small mb-0 text-white-50">Gestión Académica</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulario de Contacto con Fondo Claro y Visible -->
+    <section id="contacto" class="py-5 contact-section-light">
+        <div class="container py-4">
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <div class="contact-card-light-box">
+                        <h3 class="fw-bold mb-2" style="color: var(--alianza-blue);"><i class="fa-solid fa-futbol"></i> Informes e Inscripción</h3>
+                        <p class="text-muted mb-4 small">Selecciona si deseas pedir informes o inscribirte directamente. Envía el mensaje automático o llama directamente.</p>
+                        
+                        <form id="whatsappForm">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold text-dark">¿Qué acción deseas realizar?</label>
+                                <select class="form-select form-select-light" id="tipoAccion" required>
+                                    <option value="📋 Solicitud de Informes">📋 Pedir Informes</option>
+                                    <option value="⚽ Inscripción Directa">⚽ Inscripción Directa a la Academia</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold text-dark">Nombre del Padre, Tutor o Alumno</label>
+                                <input type="text" class="form-control form-control-light" id="nombrePersona" placeholder="Escribe tu nombre completo" required>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold text-dark">Teléfono / WhatsApp</label>
+                                    <input type="tel" class="form-control form-control-light" id="telefonoPersona" placeholder="Tu número de contacto" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold text-dark">Categoría de Interés</label>
+                                    <select class="form-select form-select-light" id="categoriaInteres">
+                                        <option value="SUB 06 (Iniciación)">SUB 06 (Iniciación)</option>
+                                        <option value="SUB 08 (Formativo)">SUB 08 (Formativo)</option>
+                                        <option value="SUB 08 (Competitivo)">SUB 08 (Competitivo)</option>
+                                        <option value="SUB 09 - 10">SUB 09 - 10</option>
+                                        <option value="SUB 11 - 12 - 13">SUB 11 - 12 - 13</option>
+                                        <option value="SUB 14 - 15 - 16 (Juvenil)">SUB 14 - 15 - 16 (Juvenil)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold text-dark">Mensaje o Comentarios Adicionales</label>
+                                <textarea class="form-control form-control-light" id="mensajeAdicional" rows="3" placeholder="Escribe tus dudas o detalles adicionales..."></textarea>
+                            </div>
+
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-success w-100 fw-bold py-2 shadow-sm">
+                                        <i class="fa-brands fa-whatsapp me-1"></i> Enviar
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <a href="tel:+51952885491" class="btn btn-primary w-100 fw-bold py-2 shadow-sm text-decoration-none d-flex align-items-center justify-content-center">
+                                        <i class="fa-solid fa-phone-volume me-1"></i> Llamar
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <div id="formResponse" class="mt-3"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="contact-card-light-box h-100">
+                        <h3 class="section-title fw-bold mb-3" style="color: var(--alianza-blue);"><i class="fa-solid fa-map-location-dot"></i> Ubicación y Canales Oficiales</h3>
+                        <p class="mb-2 text-dark"><i class="fa-solid fa-location-dot text-danger"></i> <strong>Dirección:</strong> Cancha Deportiva Oficial C.A.R. Alianza, Yurimaguas, Loreto, Perú.</p>
+                        <p class="mb-2 text-dark"><i class="fa-brands fa-whatsapp text-success"></i> <strong>WhatsApp Secretaría:</strong> +51 952 885 491</p>
+                        <p class="mb-2 text-dark"><i class="fa-brands fa-whatsapp text-success"></i> <strong>WhatsApp Presidente:</strong> +51 937 528 307</p>
+                        <p class="mb-3 text-dark"><i class="fa-solid fa-envelope" style="color: #b89735;"></i> <strong>Correo:</strong> contacto@alianzayurimaguas.com</p>
+
+                        <div class="mb-4">
+                            <p class="fw-semibold mb-2" style="color: var(--alianza-blue);"><i class="fa-solid fa-share-nodes"></i> Síguenos en nuestra Fanpage y Redes:</p>
+                            <div class="social-icons-container justify-content-start d-flex gap-3">
+                                <a href="https://www.facebook.com/centrodealtorendimientoalianzayurimaguas/" target="_blank" class="social-btn facebook" title="Facebook Fanpage"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#" target="_blank" class="social-btn instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="#" target="_blank" class="social-btn tiktok" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                                <a href="https://wa.me/51952885491" target="_blank" class="social-btn whatsapp" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="ratio ratio-16x9 rounded shadow border" style="border-color: #cbd5e1 !important;">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.8!2d-76.12!3d-5.9!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sNsKwNTQnMDAuMCJTIDc2wrAwNycwMC4wIlc!5e0!3m2!1ses!2spe!4v1600000000000!5m2!1ses!2spe" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Auspiciadores -->
+    <section id="auspiciadores" class="sponsors-section-white">
+        <div class="container text-center mb-4">
+            <span class="sponsors-title-badge mb-2">Aliados Estratégicos</span>
+            <h3 class="sponsors-main-title display-6">Nuestros Auspiciadores Oficiales</h3>
+            <p class="sponsors-subtitle">Marcas e instituciones líderes que apoyan e impulsan el talento y desarrollo de nuestra juventud.</p>
+        </div>
+        
+        <div class="sponsors-slider-wrapper">
+            <div class="sponsors-slider">
+                <div class="sponsor-slide-item-white" title="Auspiciador 1"><img src="img/chifa.svg" alt="Auspiciador 1"></div>
+                <div class="sponsor-slide-item-white" title="Auspiciador 2"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="Auspiciador 2"></div>
+                <div class="sponsor-slide-item-white" title="Auspiciador 3"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Auspiciador 3"></div>
+                <div class="sponsor-slide-item-white" title="Auspiciador 4"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Auspiciador 4"></div>
+                <div class="sponsor-slide-item-white" title="Auspiciador 5"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Auspiciador 5"></div>
+                <div class="sponsor-slide-item-white" title="Auspiciador 6"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" alt="Auspiciador 6"></div>
+                <div class="sponsor-slide-item-white" title="Auspiciador 7"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Auspiciador 7"></div>
+                <div class="sponsor-slide-item-white" title="Auspiciador 8"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="Auspiciador 8"></div>
+
+                <div class="sponsor-slide-item-white" title="Auspiciador 1"><img src="img/chifa.svg"alt="Auspiciador 1"></div>
+                <div class="sponsor-slide-item-white" title="Auspiciador 2"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="Auspiciador 2"></div>
+                <div class="sponsor-slide-item-white" title="Auspiciador 3"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Auspiciador 3"></div>
+                <div class="sponsor-slide-item-white" title="Auspiciador 4"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Auspiciador 4"></div>
+                <div class="sponsor-slide-item-white" title="Auspiciador 5"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Auspiciador 5"></div>
+                <div class="sponsor-slide-item-white" title="Auspiciador 6"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" alt="Auspiciador 6"></div>
+                <div class="sponsor-slide-item-white" title="Auspiciador 7"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Auspiciador 7"></div>
+                <div class="sponsor-slide-item-white" title="Auspiciador 8"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="Auspiciador 8"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer con el Logo sin bordes, más grande y Barra Fina -->
+    <footer>
+        <div class="footer-top">
+            <div class="container text-center">
+                <img src="https://lh3.googleusercontent.com/d/17JDIoVGBYP6cArzftpmsLpDJ8mXzB0ZG=w400" alt="C.A.R. Alianza Yurimaguas Logo" class="footer-logo-img">
+                <div class="footer-brand-title">C.A.R. ALIANZA YURIMAGUAS</div>
+                <div class="footer-brand-subtitle">¡Ven, entrena y construye tu sueño!</div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start mb-1 mb-md-0">
+                        &copy; 2026 C.A.R. Alianza Yurimaguas - Web Oficial
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        Administrado por: <span>Jc Coach</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const whatsappForm = document.getElementById('whatsappForm');
+        
+        whatsappForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const accion = document.getElementById('tipoAccion').value;
+            const nombre = document.getElementById('nombrePersona').value;
+            const telefono = document.getElementById('telefonoPersona').value;
+            const categoria = document.getElementById('categoriaInteres').value;
+            const mensajeAdicional = document.getElementById('mensajeAdicional').value;
+
+            const textoMensaje = `*¡Hola C.A.R. Alianza Yurimaguas!*%0A%0A` +
+                                 `📌 *Tipo:* ${accion}%0A` +
+                                 `👤 *Nombre:* ${nombre}%0A` +
+                                 `📱 *Teléfono:* ${telefono}%0A` +
+                                 `⚽ *Categoría:* ${categoria}%0A` +
+                                 `💬 *Comentario:* ${mensajeAdicional || 'Ninguno'}`;
+
+            const numero1 = '51952885491';
+            const numero2 = '51937528307';
+
+            const urlWhatsApp1 = `https://api.whatsapp.com/send?phone=${numero1}&text=${textoMensaje}`;
+            const urlWhatsApp2 = `https://api.whatsapp.com/send?phone=${numero2}&text=${textoMensaje}`;
+            const urlLlamada = `tel:+${numero1}`;
+
+            document.getElementById('formResponse').innerHTML = `
+                <div class="alert alert-success mt-3 shadow-sm bg-white text-dark border border-success">
+                    <strong>¡Formulario listo!</strong> Elige a dónde enviar tu mensaje o realiza una llamada directa:
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <a href="${urlWhatsApp1}" target="_blank" class="btn btn-success btn-sm fw-bold flex-fill"><i class="fa-brands fa-whatsapp"></i> WhatsApp Secretaría</a>
+                        <a href="${urlWhatsApp2}" target="_blank" class="btn btn-success btn-sm fw-bold flex-fill"><i class="fa-brands fa-whatsapp"></i> WhatsApp Presidencia</a>
+                        <a href="${urlLlamada}" class="btn btn-primary btn-sm fw-bold flex-fill"><i class="fa-solid fa-phone-volume"></i> Llamar</a>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
